@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.log
+*.exe
+*.dll
+*.tga
+*.bak
+*.orig
+*.pre-cnpatch
+_cn_release_patch/
+_cn_patch_materials/
+Vivisector.exe*
+DATA/history.bin*

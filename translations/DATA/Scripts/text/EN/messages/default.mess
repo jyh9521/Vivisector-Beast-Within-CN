@@ -1,0 +1,390 @@
+
+procedure mess_autorization_failed
+{
+  sound Sound_AuthorizationFailed
+  gui_eventicon = icon_INFO
+  gui_eventsound = 0
+  gui_eventtime = 2
+  event_message0 " "
+  event_message1 " "
+  event_message2 "*** 授权失败 ***"
+  event_message3 ""
+  event_message4 ""
+}
+
+procedure mess_access_granted
+{
+  sound Sound_AccessGranted
+  gui_eventicon = icon_INFO
+  gui_eventsound = 0
+  gui_eventtime = 2
+  event_message0 " "
+  event_message1 " "
+  event_message2 "*** 允许访问 ***"
+  event_message3 ""
+  event_message4 ""
+}
+
+procedure mess_GotKey
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 2
+  event_message0 ""
+  event_message1 ""
+  event_message2 "*** 获得授权 ***"
+  event_message3 ""
+  event_message4 ""
+}
+
+
+
+procedure mess_Locked
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 2
+  event_message0 ""
+  event_message1 ""
+  event_message2 "*** 已锁定 ***"
+  event_message3 ""
+  event_message4 ""
+}
+
+procedure message_rub_komorka
+{
+  gui_eventicon = icon_INFO
+  gui_eventtime = 4
+  event_message0 "门已解锁"
+  event_message1 ""
+  event_message2 ""
+  event_message3 ""
+  event_message4 ""
+}
+
+procedure message_rub_komorka2
+{
+  gui_eventicon = icon_INFO
+  gui_eventtime = 4
+  event_message0 "门已解锁"
+  event_message1 ""
+  event_message2 ""
+  event_message3 ""
+  event_message4 ""
+}
+
+procedure message_power_on
+{
+  gui_eventicon = icon_INFO
+  gui_eventtime = 4
+  event_message0 "电源已开启"
+  event_message1 ""
+  event_message2 ""
+  event_message3 ""
+  event_message4 ""
+}
+
+
+
+procedure proc_get_interface
+{
+  sound sound_hud_beep
+
+  gui_eventicon = icon_INFO
+  gui_eventtime = 5
+  event_message0 "*TransLoader系统启动……"
+  event_message1 "============================"
+  event_message2 "启动程序已初始化"
+  event_message3 "请稍候"
+  event_message4 "============================"
+  ax = 3
+  delayedcommand "call proc_get_health"
+}
+
+
+procedure proc_get_health
+{
+  gui_support_health=1
+
+  sound sound_hud_pick
+
+  gui_eventtime = 5
+  event_message0 "正在注册组件："
+  event_message1 " ======================="
+  event_message2 " * 生命维持系统…… 已就绪"
+  event_message3 ""
+  event_message4 ""
+  ax = 1
+  delayedcommand "call proc_get_ammo"
+}
+
+procedure proc_get_ammo
+{
+  gui_support_ammo=1
+
+  sound sound_hud_spawn
+
+  gui_eventtime = 5
+  event_message0 " 正在注册组件："
+  event_message1 " ======================="
+  event_message2 " * 生命维持系统…… 已就绪"
+  event_message3 " * 弹药装载系统…… 已就绪"
+  event_message4 ""
+
+  ax = 1
+  delayedcommand "call proc_get_map"
+}
+
+procedure proc_get_map
+{
+  gui_support_map=1
+
+  sound sound_hud_spawn
+
+  gui_eventtime = 5
+  event_message0 " 正在注册组件："
+  event_message1 " ======================="
+  event_message2 " * 生命维持系统…… 已就绪"
+  event_message3 " * 弹药装载系统…… 已就绪"
+  event_message4 " * 区域地图…… 已就绪"
+
+  ax = 1
+  delayedcommand "call proc_get_score"
+}
+
+procedure proc_get_score
+{
+  gui_support_score=1
+  playerinfo.score = 0
+  gui_show_score=1
+
+  sound sound_hud_spawn
+
+  gui_eventtime = 5
+  event_message0 " ======================="
+  event_message1 " * 生命维持系统…… 已就绪"
+  event_message2 " * 弹药装载系统…… 已就绪"
+  event_message3 " * 区域地图…… 已就绪"
+  event_message4 " * 升级模块…… 已就绪"
+
+  ax = 1
+  delayedcommand "call proc_get_cross"
+}
+
+procedure proc_get_cross
+{
+  cross_type=1
+
+  gui_eventtime = 5
+  event_message0 " * 生命维持系统…… 已就绪"
+  event_message1 " * 弹药装载系统…… 已就绪"
+  event_message2 " * 区域地图…… 已就绪"
+  event_message3 " * 升级模块…… 已就绪"
+  event_message4 " * 目标锁定…… 已就绪"
+
+  ax = 1
+  delayedcommand "call proc_get_stats"
+}
+
+procedure proc_get_stats
+{
+  gui_show_stats=1
+
+  gui_eventtime = 5
+  event_message0 " * 弹药装载系统…… 已就绪"
+  event_message1 " * 区域地图…… 已就绪"
+  event_message2 " * 升级模块…… 已就绪"
+  event_message3 " * 目标锁定…… 已就绪"
+  event_message4 " * ========================="
+
+  ax = 1
+  delayedcommand "call proc_get_ready"
+}
+
+procedure proc_get_ready
+{
+  gui_eventtime = 5
+  event_message0 " * 区域地图…… 已就绪"
+  event_message1 " * 升级模块…… 已就绪"
+  event_message2 " * 目标锁定…… 已就绪"
+  event_message3 " * ========================="
+  event_message4 " 完成，可以开始行动。"
+}
+
+procedure message_more_to_go
+{
+   ax = check_dead_id_alive
+   stri "还剩 %d 个……"
+   gui_eventicon = icon_INFO
+   gui_eventtime = 5
+   gui_eventsound = 1
+   event_message0 = str_ax
+   event_message1 ""
+   event_message2 ""
+   event_message3 ""
+   event_message4 "" 
+}
+
+
+
+procedure message_grenadil_wp
+{
+  ax = check_dead_id_alive
+  stri " 还有 %d 只榴弹兽存活……"
+  gui_eventicon = icon_INFO
+  gui_eventtime = 5
+  gui_eventsound = 1
+  event_message0 "装备榴弹发射器的怪物仍然控制着"
+  event_message1 "这片区域。杀光它们，我就打开大门。"
+  event_message2 = str_ax
+  event_message3 ""
+  event_message4 ""
+}
+
+procedure message_wave_complete
+{
+     gui_eventicon = icon_INFO
+     gui_eventtime = 5
+     event_message0 "当前波次已清理"
+     event_message1 ""
+     event_message2 ""
+     event_message3 ""
+     event_message4 ""
+}
+
+
+procedure message_wp_released
+{
+     gui_eventicon = icon_INFO
+     gui_eventtime = 10
+     event_message0 "太好了！路径点已解锁！"
+     event_message1 ""
+     event_message2 ""
+     event_message3 ""
+     event_message4 ""
+}
+
+procedure CompMessage1
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 2
+  event_message0 ""
+  event_message1 ""
+  event_message2 " *** 已获取 1 号路径胶囊 ***"
+  event_message3 ""
+}
+procedure CompMessage2
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 2
+  event_message0 ""
+  event_message1 ""
+  event_message2 " *** 已获取 2 号路径胶囊 ***"
+  event_message3 ""
+}
+procedure CompMessage3
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 2
+  event_message0 ""
+  event_message1 ""
+  event_message2 " *** 已获取 3 号路径胶囊 ***"
+  event_message3 ""
+}
+procedure CompMessage4
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 2
+  event_message0 ""
+  event_message1 ""
+  event_message2 " *** 已获取 4 号路径胶囊 ***"
+  event_message3 ""
+}
+
+procedure EventMessage_V1Done
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 4
+  event_message0 ""
+  event_message1 "已取得所有胶囊"
+  event_message2 ""
+  event_message3 ""
+
+  command "t.lock proceed_arena;t.unlock Lifting3"
+  command "t.unlock  lestnicaT"
+
+}
+
+procedure EventMessage_ReRouted
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 4
+  event_message0 ""
+  event_message1 "路线计算机已重新编程"
+  event_message2 "*** 正在处理新路径 ***"
+  event_message3 ""
+}
+
+procedure Remove_capsules
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 3
+  event_message0 ""
+  event_message1 "移除所有胶囊"
+  event_message2 ""
+  event_message3 ""
+}
+
+procedure Install_capsules
+{
+  gui_eventicon = icon_INFO
+  gui_eventsound = 1
+  gui_eventtime = 3
+  event_message0 ""
+  event_message1 "安装新路线"
+  event_message2 ""
+  event_message3 ""
+}
+
+procedure UpgradeMod_Start
+{
+   gui_eventicon = icon_INFO
+   gui_eventtime = 20
+
+   event_message0 = "* 升级模块"
+   event_message1 ""
+   event_message2 ""
+   event_message3 ""
+   event_message4 ""
+
+   call UpgradeMod_Online
+   call pics_on
+}
+
+procedure UpgradeMod_Online
+{
+  str_ax = "."
+  _call strcat(&event_message0, &str_ax)
+
+  str_ax = event_message0
+  _call strlen
+  if (result > 32) 
+  {
+     str_ax = "已就绪"
+     _call strcat(&event_message0, &str_ax)
+     cur_up = 0
+     sound Sound_Hud_Pick
+     call UpgradeMod_Get
+     exit
+  }
+    
+  ax = 3.2/result
+  delayedcommand "call UpgradeMod_Online"
+}
