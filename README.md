@@ -1,6 +1,6 @@
 # 《Vivisector: Beast Within》简体中文汉化
 
-Vivisector: Beast Within 的简体中文翻译与补丁工具工程。仓库保存译文、可执行文件补丁脚本与字库生成工具，不提供完整游戏或已修改的游戏程序。
+Vivisector: Beast Within 的简体中文翻译与补丁工具工程。源码仓库保存译文、可执行文件补丁脚本与字库生成工具；玩家安装包见下方 Release，不含完整游戏。
 
 ## 支持环境与当前状态
 
