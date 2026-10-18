@@ -1,89 +1,67 @@
-# Vivisector - Beast Within 简体中文补丁
+# 《Vivisector: Beast Within》简体中文汉化
 
-这是《Vivisector - Beast Within》的简体中文补丁工程。
+Vivisector: Beast Within 的简体中文翻译与补丁工具工程。仓库保存译文、可执行文件补丁脚本与字库生成工具，不提供完整游戏或已修改的游戏程序。
 
-本仓库只包含中文翻译文本和补丁工具，不包含游戏本体、原版资源、改好的 `Vivisector.exe`，也不包含生成后的 `NewFont.tga`。
+## 支持环境与当前状态
 
-## 补丁原理
+当前提供**源码安装方式**，尚无 GitHub Release 玩家安装包。需要 Windows、Python 3、Pillow，以及自行安装或解包的游戏。
 
-游戏原本使用单字节位图字体。补丁会做三件事：
+补丁依赖游戏可执行文件的具体字节布局，不能视为适配所有发行版本；脚本会检查目标指令，匹配失败时应核对版本，不跳过检测继续写入。仓库尚未提供完整通关验收结论。
 
-1. 将中文文本按 GBK/CP936 编码放入原脚本目录。
-2. 修改 `Vivisector.exe` 的文字渲染逻辑，让它把 GBK 双字节当作一个字符读取。
-3. 使用本机中文字体生成 4096x4096 的 `NewFont.tga` 位图字库。
+## 安装 / 使用
 
-## 安装方法
+先备份完整游戏目录，尤其是脚本、配置与将被覆盖的文本。下载或克隆本仓库，在仓库根目录运行：
 
-准备：
-
-- 自备已经安装或解包好的游戏目录。
-- Windows 系统。
-- Python 3。
-- Pillow：
-
-```bat
-pip install pillow
-```
-
-一键安装：
-
-```bat
+```powershell
+python -m pip install Pillow
 python tools\install_cn_patch.py --game-dir "D:\Games\Vivisector - Beast Within"
 ```
 
-如果你已经在游戏根目录打开命令行，也可以这样运行：
+安装脚本会复制中文文本、修改 `Vivisector.exe`、生成 `NewFont.tga`、调整字体尺寸与菜单脚本，并处理旧缓存 `DATA\history.bin`。完成后使用游戏原入口启动，安装工具不代替游戏本体。
 
-```bat
-python "D:\Path\To\Vivisector-CN-Patch\tools\install_cn_patch.py"
-```
+## 技术摘要
 
-安装脚本会自动：
+原游戏使用单字节位图字体。本补丁将脚本文本按 **GBK / CP936** 编码写入，并修改文字渲染逻辑，将双字节字符作为一个字形读取；字库工具利用本机中文字体生成 **4096×4096** 的 `NewFont.tga`。
 
-- 复制 `translations` 里的中文文本。
-- 修改 `Vivisector.exe`。
-- 生成中文 `NewFont.tga`。
-- 调整 `config.cfg`、`DATA\Scripts\init.cfg`、`DATA\Scripts\menu\menu.s` 里的字体尺寸设置。
-- 处理旧脚本缓存 `DATA\history.bin`。
+这套编码是当前引擎适配约束，不应直接替换为 UTF-8，也不代表其他语言必须采用同样的编码方案。
 
-## 手动安装
+## 分步构建
 
-也可以分步运行：
+需要单独检查程序与字库时，可使用：
 
-```bat
+```powershell
 python tools\patch_vivisector_cn.py --game-dir "D:\Games\Vivisector - Beast Within"
 python tools\make_gbk_font.py --game-dir "D:\Games\Vivisector - Beast Within"
 ```
 
-然后把 `translations` 目录里的 `DATA` 文件夹复制到游戏根目录，覆盖同名文件。
+然后将 `translations\DATA` 复制到游戏目录。分步命令不会代替一键安装器里的配置、菜单尺寸与缓存处理，完整安装优先使用 `install_cn_patch.py`。
 
-## 编码说明
+## 备份与恢复
 
-`translations` 目录下的游戏文本文件必须保持 GBK/CP936 编码。  
-不要用 UTF-8 重新保存这些文件，否则游戏里会乱码或报错。
-
-仓库里的 `.gitattributes` 已经将 `translations/**` 标记为二进制，避免 Git 自动改行尾或编码。
-
-## 备份
-
-工具会在游戏目录中生成这些备份：
+工具按对应文件是否存在生成备份：
 
 - `Vivisector.exe.pre-cnpatch`
 - `DATA\Textures\Interface\Text\EN\NewFont.tga.orig`
 - `DATA\history.bin.pre-cnpatch`
 
-这些文件用于回滚或重新生成补丁，不需要上传到 GitHub Release。
+这些只覆盖部分修改，**不是完整卸载备份**；译文、`config.cfg`、`init.cfg` 和 `menu.s` 等仍需依靠安装前备份恢复。恢复时退出游戏，优先还原完整目录备份，避免混用不同安装版本的文件。
 
-## 不建议上传的文件
+## 仓库结构与维护
 
-请不要把这些文件提交到仓库：
+| 路径 | 内容 |
+| --- | --- |
+| `translations/` | GBK / CP936 游戏译文与脚本 |
+| `tools/install_cn_patch.py` | 一键安装入口 |
+| `tools/patch_vivisector_cn.py` | 可执行文件文字路径补丁 |
+| `tools/make_gbk_font.py` | 中文位图字库生成 |
+| `tools/set_main_menu_hints_gbk.py` | 菜单提示文本处理 |
 
-- `Vivisector.exe`
-- `*.dll`
-- `DATA\Textures\Interface\Text\EN\NewFont.tga`
-- 完整游戏 `DATA` 目录
-- 日志文件
-- 备份文件
+译文保持原编码与控制语法，不用 UTF-8 重存。`.gitattributes` 将 `translations/**` 视为二进制，避免 Git 自动转换行尾或编码。
 
-## 免责声明
+修改后分别检查程序指令匹配、字库生成、文本编码及游戏内菜单 / 字幕显示；脚本成功不等于完整实机验收。
 
-本项目只提供中文翻译和技术补丁工具。使用者需要自行拥有游戏本体。
+## 来源与许可
+
+原游戏、程序、素材及系统字体归各自权利人所有。仓库当前未提供项目级 `LICENSE`，不额外宣称统一开源许可。
+
+游戏 EXE / DLL、完整 DATA、原版或生成字库、日志和备份不提交源码仓库。使用者需自行准备游戏和可用于字库生成的字体。
